@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 const json2csv = require("json2csv").parse;
 mongoose
-  .connect("mongodb://localhost:27017/dome")
+  .connect("mongodb+srv://pitabaspradhan834:pitabasp934@cluster0.p6ocoqf.mongodb.net/dome?retryWrites=true&w=majority")
   .then(async () => {
     console.log("DB Connected");
   })
