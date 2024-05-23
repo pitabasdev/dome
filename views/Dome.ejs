@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <title>Dome</title>
+    <style>
+      * {
+        font-family: "Poppins";
+      }
+      .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(52, 70, 41, 0.712);
+        transition: 0.3s;
+      }
+
+      /* On mouse-over, add a deeper shadow */
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(9, 184, 9, 0.767);
+      }
+    </style>
+  </head>
+  <body ng-app="myapp" ng-controller="myctrl">
+    <!-- modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Message ✉</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <h5 class="h5">
+              {{ message }}
+            </h5>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+
+    <nav   class="navbar navbar-expand-lg navbar-dark"
+    style="background-color: #116530">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img style="height: 38px;" src="/images/large__1_-removebg-preview.png"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/home"
+                >Home 🏠</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/logout"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col">
+              <div
+                class="card mt-4 border border-dark"
+                data-aos="zoom-out"
+                data-aos-delay="600"
+              >
+                <div class="card-body">
+                  <h3 class="card-title">Change Dome Settings ⚙</h3>
+                  <sub class="text-muted">Dome Unique Id: - <%= id %></sub>
+                  <div class="mb-3">
+                    <label class="form-label">Temperature Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Temperature Low"
+                      ng-model="templow"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Temperature High</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Temperature High"
+                      ng-model="temphigh"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Temperature Hysteresis Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Temperature Hysteresis Low"
+                      ng-model="temphl"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Temperature Hysteresis High</label
+                    >
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Temperature Hysteresis High"
+                      ng-model="temphh"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Humidity Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Humidity Low"
+                      ng-model="humiditylow"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Humidity High</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Humidity High"
+                      ng-model="humidityhigh"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Humidity Hysteresis Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Humidity Hysteresis Low"
+                      ng-model="humidityhhl"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Humidity Hysteresis High</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Humidity Hysteresis High"
+                      ng-model="humidityhhh"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Co2 Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter CO2 Low"
+                      ng-model="co2low"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Co2 High</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter CO2 High"
+                      ng-model="co2high"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Moisture Low</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Moisture Low"
+                      ng-model="moisturelow"
+                      max="100"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Moisture High</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Enter Moisture High"
+                      ng-model="moisturehigh"
+                      max="100"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-outline-success"
+                    ng-click="updateall();"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div
+                    class="card mt-2"
+                    data-aos="fade-right"
+                    data-aos-delay="500"
+                  >
+                    <div class="card-body">
+                      <h4 class="h4" ng-init="getrefvalues();">
+                        Reference Data.
+                      </h4>
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <th scope="row">Temp Low 💨</th>
+                            <td>{{ refvalues.re_temp_low }}<sub>degree</sub></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Temp High💨</th>
+                            <td>
+                              {{ refvalues.re_temp_high }}<sub>Percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Temp Hysteresis Low💨</th>
+                            <td>
+                              {{ refvalues.re_temp_hl }}<sub>Percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Temp Hysteresis High💨</th>
+                            <td>
+                              {{ refvalues.re_temp_hh }}<sub>Percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Humidity Low💧</th>
+                            <td>
+                              {{ refvalues.re_humidity_low }}<sub>percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Humidity High 💧</th>
+                            <td>
+                              {{ refvalues.re_humidity_high }}<sub>percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Humidity Hysteresis Low💧</th>
+                            <td>
+                              {{ refvalues.re_humidity_hl }}<sub>Percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Humidity Hysteresis High💧</th>
+                            <td>
+                              {{ refvalues.re_humidity_hh }}<sub>Percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">CO2 Low</th>
+                            <td>{{ refvalues.re_co2_low }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">CO2 High</th>
+                            <td>{{ refvalues.re_co2_high }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Moisture Low ❄</th>
+                            <td>
+                              {{ refvalues.re_soilmoisture_low
+                              }}<sub>percent</sub>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Moisture High ❄</th>
+                            <td>
+                              {{ refvalues.re_soilmoisture_high
+                              }}<sub>percent</sub>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div
+                    class="card mt-2"
+                    data-aos="fade-right"
+                    data-aos-delay="500"
+                  >
+                    <div class="card-body">
+                      <h4 class="h4">
+                        Status:
+                        <span>
+                          <button class="btn btn-outline-primary">
+                            <i class="fas fa-spinner fa-spin"></i>
+                          </button>
+                        </span>
+                      </h4>
+                      <table
+                        class="table"
+                        ng-init="makechangeincurrentvalues()"
+                      >
+                      <script>
+                        // Get the current hour
+                        const currentHour = new Date().getHours();
+                      </script>
+                      
+                      <tbody>
+                        <tr>
+                            <th scope="row">Fan 1 💨</th>
+                            <td>{{ statuses.fan1 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Fan 2 💨</th>
+                            <td>{{ statuses.fan2 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vent 1 🌀</th>
+                            <td>{{ statuses.vent1 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vent 2 🌀</th>
+                            <td>{{ statuses.vent2 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vent 3 🌀</th>
+                            <td>{{ statuses.vent3 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vent 4 🌀</th>
+                            <td>{{ statuses.vent4 }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Heater 🔥</th>
+                            <td>{{ statuses.heater }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Mistyrise 💧</th>
+                            <td>{{ statuses.mistyrise }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Dehumidifier 💨</th>
+                            <td>{{ statuses.dehumidifier }}</td>
+                        </tr>
+                        </tbody>
+                      
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card mt-2" data-aos="fade-left" data-aos-delay="500">
+                <div class="card-body" ng-init="getallcurvalue();">
+                  <h3 class="h3">
+                    Current Values
+                    <a
+                      class="btn btn-outline-success text-end"
+                      href="/download/<%= id %>"
+                    >
+                      Download CSV ⬇
+                    </a>
+                    <br />
+                  </h3>
+                  <sub class="text-muted mx-2"
+                    >Reloaded In Every 20 Seconds
+                    <i class="fas fa-spinner fa-spin"></i
+                  ></sub>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Temp</th>
+                          <th scope="col">Humidity</th>
+                          <th scope="col">Moisture</th>
+                          <th scope="col">CO2</th>
+                          <th scope="col">TimeStamp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          ng-repeat="data in responsefromapi | orderBy: '-date'"
+                        >
+                          <td>{{ data.temp }}</td>
+                          <td>{{ data.humidity }}</td>
+                          <td>{{ data.moisture }}</td>
+                          <td>{{data.co2}}</td>
+                          <td>
+                            {{ data.date | date : "dd/MM/yyyy h:m:ss a" }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="row">
+            <img
+              src="/img/Organic  Farming.svg"
+              class="img-fluid"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="row">
+            <img
+              src="/img/undraw_Designer_by46.svg"
+              class="img-fluid"
+              alt=""
+              srcset=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="text-center p-3 text-white" style="background-color: #116530;margin-top:10px">
+        This made with by 💖
+        <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/"
+          >Pitabas</a
+        >
+      </div>
+    </footer>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+        // const currentHour = new Date().getHours();
+      AOS.init();
+      var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+      setInterval(function () {
+        angular
+          .element(document.getElementsByTagName("body"))
+          .scope()
+          .getallcurvalue();
+      }, 20000);
+      setInterval(function () {
+        angular
+          .element(document.getElementsByTagName("body"))
+          .scope()
+          .makechangeincurrentvalues();
+      }, 20000);
+    </script>
+    <script src="/js/dome.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
