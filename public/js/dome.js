@@ -97,7 +97,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
     const re_temp_hl = currentstatusofperiph.re_temp_hl;
     const re_temp_hh = currentstatusofperiph.re_temp_hh;
 
-    if (currentHour >= 6 && currentHour < 18) {
+    if (currentHour >= 600 && currentHour < 1200) {
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
@@ -108,7 +108,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
-      } else if (cu_temp > re_temp_high) {
+      } else if (cu_temp > re_temp_high && cu_temp < re_temp_hh) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
         statuses.vent1 = "✅";
@@ -150,7 +150,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.dehumidifier = "❌";
       }
     } else {
-      // Night shift conditions
+      
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
@@ -179,7 +179,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.vent3 = "✅";
         statuses.vent4 = "✅";
         statuses.heater = "❌";
-        statuses.mistyrise = "✅";
+        statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
       } else if (cu_temp < re_temp_low) {
         statuses.fan1 = "✅";
@@ -220,6 +220,5 @@ app.controller("myctrl", ($scope, $http, $window) => {
     );
   };
 
-  // Call the function to fetch data and update statuses
   $scope.makechangeincurrentvalues();
 });
