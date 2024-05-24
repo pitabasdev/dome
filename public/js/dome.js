@@ -161,7 +161,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
-      } else if (cu_temp > re_temp_high) {
+      } else if (cu_temp > re_temp_high && cu_temp <= re_temp_hh) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
         statuses.vent1 = "✅";
@@ -181,7 +181,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
-      } else if (cu_temp < re_temp_low) {
+      } else if (cu_temp >= re_temp_hl && cu_temp < re_temp_low) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
         statuses.vent1 = "❌";
