@@ -97,7 +97,13 @@ app.controller("myctrl", ($scope, $http, $window) => {
     const re_temp_hl = currentstatusofperiph.re_temp_hl;
     const re_temp_hh = currentstatusofperiph.re_temp_hh;
 
-    if (6<=currentHour&&currentHour<=18) {
+    const cu_humidity = currentstatusofperiph.cu_humidity;
+    const re_humidity_low = currentstatusofperiph.re_humidity_low;
+    const re_humidity_high = currentstatusofperiph.re_humidity_high;
+    const re_humidity_hh = currentstatusofperiph.re_humidity_hh;
+    const re_humidity_hl = currentstatusofperiph.re_humidity_hl;
+
+    if (6 <= currentHour && currentHour <= 17) {
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
@@ -150,7 +156,6 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.dehumidifier = "❌";
       }
     } else {
-      
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
@@ -202,6 +207,49 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
       }
+      if (cu_humidity > re_humidity_high && cu_humidity <= re_humidity_hh) {
+        statuses.fan1 = "✅";
+        statuses.fan2 = "❌";
+        statuses.vent1 = "✅";
+        statuses.vent2 = "❌";
+        statuses.vent3 = "✅";
+        statuses.vent4 = "❌";
+        statuses.heater = "❌";
+        statuses.mistyrise = "❌";
+        statuses.dehumidifier = "✅";
+      }else if(cu_humidity > re_humidity_hh){
+        statuses.fan1 = "✅";
+        statuses.fan2 = "✅";
+        statuses.vent1 = "✅";
+        statuses.vent2 = "✅";
+        statuses.vent3 = "✅";
+        statuses.vent4 = "✅";
+        statuses.heater = "❌";
+        statuses.mistyrise = "❌";
+        statuses.dehumidifier = "❌";
+        
+      }else if (cu_humidity > re_humidity_hl && cu_humidity <= re_humidity_low) {
+        statuses.fan1 = "✅";
+        statuses.fan2 = "❌";
+        statuses.vent1 = "❌";
+        statuses.vent2 = "❌";
+        statuses.vent3 = "✅";
+        statuses.vent4 = "❌";
+        statuses.heater = "❌";
+        statuses.mistyrise = "❌";
+        statuses.dehumidifier = "❌";
+      }else if(cu_humidity < re_humidity_hl){
+        statuses.fan1 = "❌";
+        statuses.fan2 = "❌";
+        statuses.vent1 = "❌";
+        statuses.vent2 = "❌";
+        statuses.vent3 = "❌";
+        statuses.vent4 = "❌";
+        statuses.heater = "❌";
+        statuses.mistyrise = "✅";
+        statuses.dehumidifier = "❌";
+        
+      }
     }
     return statuses;
   }
@@ -212,7 +260,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
       (response) => {
         $scope.currentstatusofperiph = response.data.led[0];
         const currentHour = new Date().getHours();
-        console.log(currentHour)
+        console.log(currentHour);
         $scope.statuses = getStatus(currentHour, $scope.currentstatusofperiph);
       },
       (error) => {
