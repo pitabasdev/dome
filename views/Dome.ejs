@@ -86,10 +86,16 @@
     </div>
     <!-- modal -->
 
-    <nav   class="navbar navbar-expand-lg navbar-dark"
-    style="background-color: #116530">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark"
+      style="background-color: #116530"
+    >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img style="height: 38px;" src="/images/large__1_-removebg-preview.png"></a>
+        <a class="navbar-brand" href="#"
+          ><img
+            style="height: 38px"
+            src="/images/large__1_-removebg-preview.png"
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -279,7 +285,9 @@
                         <tbody>
                           <tr>
                             <th scope="row">Temp Low 💨</th>
-                            <td>{{ refvalues.re_temp_low }}<sub>degree</sub></td>
+                            <td>
+                              {{ refvalues.re_temp_low }}<sub>degree</sub>
+                            </td>
                           </tr>
                           <tr>
                             <th scope="row">Temp High💨</th>
@@ -289,15 +297,11 @@
                           </tr>
                           <tr>
                             <th scope="row">Temp Hysteresis Low💨</th>
-                            <td>
-                              {{ refvalues.re_temp_hl }}<sub>degree</sub>
-                            </td>
+                            <td>{{ refvalues.re_temp_hl }}<sub>degree</sub></td>
                           </tr>
                           <tr>
                             <th scope="row">Temp Hysteresis High💨</th>
-                            <td>
-                              {{ refvalues.re_temp_hh }}<sub>degree</sub>
-                            </td>
+                            <td>{{ refvalues.re_temp_hh }}<sub>degree</sub></td>
                           </tr>
                           <tr>
                             <th scope="row">Humidity Low💧</th>
@@ -369,50 +373,49 @@
                         class="table"
                         ng-init="makechangeincurrentvalues()"
                       >
-                      <script>
-                        // Get the current hour
-                        const currentHour = new Date().getHours();
-                      </script>
-                      
-                      <tbody>
-                        <tr>
+                        <script>
+                          // Get the current hour
+                          const currentHour = new Date().getHours();
+                        </script>
+
+                        <tbody>
+                          <tr>
                             <th scope="row">Fan 1 💨</th>
                             <td>{{ statuses.fan1 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Fan 2 💨</th>
                             <td>{{ statuses.fan2 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Vent 1 🌀</th>
                             <td>{{ statuses.vent1 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Vent 2 🌀</th>
                             <td>{{ statuses.vent2 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Vent 3 🌀</th>
                             <td>{{ statuses.vent3 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Vent 4 🌀</th>
                             <td>{{ statuses.vent4 }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Heater 🔥</th>
                             <td>{{ statuses.heater }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Misting 💧</th>
                             <td>{{ statuses.mistyrise }}</td>
-                        </tr>
-                        <tr>
+                          </tr>
+                          <tr>
                             <th scope="row">Dehumidifier 💨</th>
                             <td>{{ statuses.dehumidifier }}</td>
-                        </tr>
+                          </tr>
                         </tbody>
-                      
                       </table>
                     </div>
                   </div>
@@ -427,9 +430,13 @@
                     <a
                       class="btn btn-outline-success text-end"
                       href="/download/<%= id %>"
+                      >Download CSV ⬇</a
                     >
-                      Download CSV ⬇
-                    </a>
+                    <a
+                      class="btn btn-outline-primary text-end"
+                      href="/graphic/<%= id %>"
+                      >Graphic View 📊</a
+                    >
                     <br />
                   </h3>
                   <sub class="text-muted mx-2"
@@ -454,7 +461,7 @@
                           <td>{{ data.temp }}</td>
                           <td>{{ data.humidity }}</td>
                           <td>{{ data.moisture }}</td>
-                          <td>{{data.co2}}</td>
+                          <td>{{ data.co2 }}</td>
                           <td>
                             {{ data.date | date : "dd/MM/yyyy h:m:ss a" }}
                           </td>
@@ -489,7 +496,10 @@
     </div>
 
     <footer>
-      <div class="text-center p-3 text-white" style="background-color: #116530;margin-top:10px">
+      <div
+        class="text-center p-3 text-white"
+        style="background-color: #116530; margin-top: 10px"
+      >
         This made with by 💖
         <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/"
           >Pitabas</a
@@ -506,7 +516,7 @@
     ></script>
 
     <script>
-        // const currentHour = new Date().getHours();
+      // const currentHour = new Date().getHours();
       AOS.init();
       var myModal = new bootstrap.Modal(document.getElementById("myModal"));
       setInterval(function () {

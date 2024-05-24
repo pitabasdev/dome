@@ -16,11 +16,14 @@ const JWT_SECRET =
 
 app.use(express.json());
 app.use(cors());
+
 const threshholdvaluemodel = require("./model/threshholdvalue");
 app.use(cookieParser());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 const json2csv = require("json2csv").parse;
+const path = require('path');
+const axios = require('axios');
 mongoose
   .connect("mongodb+srv://pitabaspradhan834:pitabasp934@cluster0.p6ocoqf.mongodb.net/dome?retryWrites=true&w=majority")
   .then(async () => {
@@ -51,7 +54,16 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
-
+app.get('/graphic/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const sensorData = await SensorInfo.find({ polyhsid: id }).sort({ date: -1 }).limit(10);
+    console.log(sensorData)
+    res.render('graphic', { id, sensorData });
+  } catch (err) {
+    res.status(500).send({ status: 'fail', message: 'Internal Server Error' });
+  }
+});
 app.post("/reg", async (req, res) => {
   const { name, email, password: plaintextpassword, specialaccess } = req.body;
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graphic View</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@^3"></script>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="mb-4">Sensor Data Graphical View</h2>
+    <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
+      <canvas id="sensorChart"></canvas>
+    </div>
+  </div>
+  <script>
+    const ctx = document.getElementById('sensorChart').getContext('2d');
+    const sensorData = <%- JSON.stringify(sensorData) %>;
+
+    const labels = sensorData.map(data => new Date(data.date));
+    const tempData = sensorData.map(data => data.temp);
+    const humidityData = sensorData.map(data => data.humidity);
+    const moistureData = sensorData.map(data => data.moisture);
+    const co2Data = sensorData.map(data => data.co2);
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Temperature',
+            data: tempData,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1,
+            fill: false
+          },
+          {
+            label: 'Humidity',
+            data: humidityData,
+            borderColor: 'rgb(54, 162, 235)',
+            tension: 0.1,
+            fill: false
+          },
+          {
+            label: 'Moisture',
+            data: moistureData,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+            fill: false
+          },
+          {
+            label: 'CO2',
+            data: co2Data,
+            borderColor: 'rgb(153, 102, 255)',
+            tension: 0.1,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false, // To allow responsiveness
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 10
+            }
+          },
+          x: {
+            type: 'time',
+            time: {
+              unit: 'minute', // Change to 'minute'
+              displayFormats: {
+                minute: 'h:mm a' // Adjust the display format
+              },
+              stepSize: 1 // Set the stepSize to 1
+            },
+            title: {
+              display: true,
+              text: 'Timestamp'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Sensor Data Over Time'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
