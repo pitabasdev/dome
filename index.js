@@ -58,8 +58,12 @@ app.get('/graphic/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const sensorData = await SensorInfo.find({ polyhsid: id }).sort({ date: -1 }).limit(10);
-    console.log(sensorData)
-    res.render('graphic', { id, sensorData });
+    const thresholdData = await threshholdvaluemodel.findOne({ _id: id });
+    console.log(thresholdData)
+    // if (!sensorData || !thresholdData) {
+    //   return res.status(404).send({ status: 'fail', message: 'Data not found' });
+    // }
+    res.render('graphic', { id, sensorData, thresholdData });
   } catch (err) {
     res.status(500).send({ status: 'fail', message: 'Internal Server Error' });
   }

@@ -11,8 +11,11 @@
 <body>
   <div class="container mt-4">
     <h2 class="mb-4">Sensor Data Graphical View</h2>
-    <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
+    <div class="chart-container" style="position: relative; height: 40vh; width: 80vw">
       <canvas id="sensorChart"></canvas>
+    </div>
+    <div class="chart-container" style="position: relative; height: 40vh; width: 80vw">
+      <canvas id="thresholdChart"></canvas>
     </div>
   </div>
   <script>
@@ -73,11 +76,11 @@
           x: {
             type: 'time',
             time: {
-              unit: 'minute', // Change to 'minute'
+              unit: 'minute',
               displayFormats: {
-                minute: 'h:mm a' // Adjust the display format
+                minute: 'h:mm a'
               },
-              stepSize: 1 // Set the stepSize to 1
+              stepSize: 1
             },
             title: {
               display: true,
@@ -96,6 +99,53 @@
         }
       }
     });
+    fetch('/getthreshholdvalue/<%= id %>')
+      .then(response => response.json())
+      .then(data => {
+        const thresholdLabels = ['Temperature Low', 'Temperature High', 'Humidity Low', 'Humidity High']; 
+        const thresholdValues = [
+          data.led[0].re_temp_low,
+          data.led[0].re_temp_high,
+          data.led[0].re_humidity_low,
+          data.led[0].re_humidity_high
+          // Add more threshold values as needed
+        ];
+
+        const thresholdCtx = document.getElementById('thresholdChart').getContext('2d');
+        const thresholdChart = new Chart(thresholdCtx, {
+          type: 'bar',
+          data: {
+            labels: thresholdLabels,
+            datasets: [{
+              label: 'Threshold Values',
+              data: thresholdValues,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+                // Add more background colors as needed
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+                // Add more border colors as needed
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            scales: {
+              x: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
   </script>
 </body>
 </html>
