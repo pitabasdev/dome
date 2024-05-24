@@ -97,7 +97,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
     const re_temp_hl = currentstatusofperiph.re_temp_hl;
     const re_temp_hh = currentstatusofperiph.re_temp_hh;
 
-    if (currentHour >= 600 && currentHour < 1200) {
+    if (6<=currentHour&&currentHour<=18) {
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
@@ -126,7 +126,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.vent3 = "✅";
         statuses.vent4 = "✅";
         statuses.heater = "❌";
-        statuses.mistyrise = "❌";
+        statuses.mistyrise = "✅";
         statuses.dehumidifier = "❌";
       } else if (cu_temp >= re_temp_hl && cu_temp < re_temp_low) {
         statuses.fan1 = "✅";
@@ -212,6 +212,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
       (response) => {
         $scope.currentstatusofperiph = response.data.led[0];
         const currentHour = new Date().getHours();
+        console.log(currentHour)
         $scope.statuses = getStatus(currentHour, $scope.currentstatusofperiph);
       },
       (error) => {
