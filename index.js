@@ -492,6 +492,10 @@ app.get("/download/:id", async (req, res) => {
   }
 });
 
+app.get("/aboutus", (req, res) => {
+  res.render("about");
+});
+
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/login");

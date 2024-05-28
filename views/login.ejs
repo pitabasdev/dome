@@ -48,11 +48,24 @@
       }
 
       footer {
-        /* Sticky footer styles */
-        position: sticky;
+        /* Fixed footer styles */
+        position: fixed;
         bottom: 0;
+        left: 0;
+        right: 0;
         background-color: rgba(0, 0, 0, 0.05);
         width: 100%;
+        z-index: 1000;
+      }
+
+      .footer-content {
+        padding: 10px;
+      }
+
+      .footer-bottom {
+        background-color: #116530;
+        color: white;
+        padding: 10px 0;
       }
     </style>
     <title>Login</title>
@@ -98,39 +111,20 @@
               <form id="login-form">
                 <hr />
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Email
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="Enter Your Email"
-                  />
+                  <label for="exampleFormControlInput1" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter Your Email" />
                 </div>
                 <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="Password"
-                  />
+                  <label for="exampleFormControlTextarea1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password" />
                 </div>
-                <button class="btn btn-outline-dark" type="submit">
-                  Login
-                </button>
-                <button class="btn btn-outline-danger" type="reset">
-                  Reset
-                </button>
+                <button class="btn btn-outline-dark" type="submit">Login</button>
+                <button class="btn btn-outline-danger" type="reset">Reset</button>
                 <br />
               </form>
               <p>
                 <br />
-
-                <br />Not a Memeber Of Dome ?
+                <br />Not a Member Of Dome ?
                 <a href="/signup" class="text-dark">SignUp</a> Now.
               </p>
             </div>
@@ -138,53 +132,22 @@
         </div>
       </div>
     </div>
-    <footer class="bg-body-tertiary text-center mt-4"  >
-      <div class="container p-4 pb-0">
-        <section class="mb-4" >
-          <a
-            data-mdb-ripple-init
-            class="btn text-white btn-floating m-1"
-            style="background-color: #3b5998"
-            href="/aboutus"
-            role="button"
-            ><i class="fa-solid fa-address-card"></i
-          ></a>
-          <a
-            data-mdb-ripple-init
-            class="btn text-white btn-floating m-1"
-            style="background-color: #ac2bac"
-            href="#!"
-            role="button"
-            ><i class="fab fa-instagram"></i
-          ></a>
-          <a
-            data-mdb-ripple-init
-            class="btn text-white btn-floating m-1"
-            style="background-color: #0082ca"
-            href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/"
-            role="button" 
-            ><i class="fab fa-linkedin-in"></i
-          ></a>
-          <a
-            data-mdb-ripple-init
-            class="btn text-white btn-floating m-1"
-            style="background-color: #333333"
-            href="https://github.com/pitabasdev"
-            role="button"
-            ><i class="fab fa-github"></i
-          ></a>
+    
+    <footer class="bg-body-tertiary text-center">
+      <div class="footer-content container p-4 pb-0">
+        <section class="mb-4">
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #3b5998" href="/aboutus" role="button"><i class="fa-solid fa-address-card"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #0082ca" href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/" role="button"><i class="fab fa-linkedin-in"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #333333" href="https://github.com/pitabasdev" role="button"><i class="fab fa-github"></i></a>
         </section>
       </div>
-      <div
-        class="text-center p-3  text-white"
-        style="background-color: #116530;"
-      >
-       This made with by 💖
-        <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/"
-          >Pitabas</a
-        >
+      <div class="footer-bottom text-center p-3">
+        This made with by 💖
+        <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/">Pitabas</a>
       </div>
     </footer>
+
     <script>
       const form = document.getElementById("login-form");
       form.addEventListener("submit", registeruser);
@@ -210,9 +173,7 @@
           var time = now.getTime();
           var expireTime = time + 1000 * 36000;
           now.setTime(expireTime);
-          document.cookie = `token=${
-            result.data
-          };expires=${now.toUTCString()};`;
+          document.cookie = `token=${result.data};expires=${now.toUTCString()};`;
           console.log(document.cookie);
           window.location = "/home";
         } else {
