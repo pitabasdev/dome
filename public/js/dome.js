@@ -226,7 +226,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.vent4 = "✅";
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
-        statuses.dehumidifier = "❌";
+        statuses.dehumidifier = "✅";
       } else if (
         cu_humidity >= re_humidity_hl &&
         cu_humidity <= re_humidity_low
