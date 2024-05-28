@@ -103,6 +103,11 @@ app.controller("myctrl", ($scope, $http, $window) => {
     const re_humidity_hh = currentstatusofperiph.re_humidity_hh;
     const re_humidity_hl = currentstatusofperiph.re_humidity_hl;
 
+    const re_co2_low = currentstatusofperiph.re_co2_low;
+    const re_co2_high = currentstatusofperiph.re_co2_high;
+    const re_soilmoisture_low = currentstatusofperiph.re_soilmoisture_low;
+    const re_soilmoisture_high = currentstatusofperiph.re_soilmoisture_high;
+
     if (6 <= currentHour && currentHour <= 17) {
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";

@@ -435,7 +435,6 @@
                         ng-init="makechangeincurrentvalues()"
                       >
                         <script>
-                          // Get the current hour
                           const currentHour = new Date().getHours();
                         </script>
 
@@ -474,6 +473,14 @@
                           </tr>
                           <tr>
                             <th scope="row">Dehumidifier 💨</th>
+                            <td>{{ statuses.dehumidifier }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Water Valve 💧</th>
+                            <td>{{ statuses.dehumidifier }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Co2 Valve 💧</th>
                             <td>{{ statuses.dehumidifier }}</td>
                           </tr>
                         </tbody>
