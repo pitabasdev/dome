@@ -25,7 +25,7 @@ const json2csv = require("json2csv").parse;
 const path = require('path');
 const axios = require('axios');
 mongoose
-  .connect("mongodb+srv://pitabaspradhan834:pitabasp934@cluster0.p6ocoqf.mongodb.net/dome?retryWrites=true&w=majority")
+  .connect(process.env.DB_URL)
   .then(async () => {
     console.log("DB Connected");
   })

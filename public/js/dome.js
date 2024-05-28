@@ -141,7 +141,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.vent2 = "❌";
         statuses.vent3 = "✅";
         statuses.vent4 = "❌";
-        statuses.heater = "❌";
+        statuses.heater = "✅";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
       } else if (cu_temp < re_temp_hl) {
@@ -168,11 +168,11 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.dehumidifier = "❌";
       } else if (cu_temp > re_temp_high && cu_temp <= re_temp_hh) {
         statuses.fan1 = "✅";
-        statuses.fan2 = "❌";
+        statuses.fan2 = "✅";
         statuses.vent1 = "✅";
         statuses.vent2 = "✅";
-        statuses.vent3 = "✅";
-        statuses.vent4 = "✅";
+        statuses.vent3 = "❌";
+        statuses.vent4 = "❌";
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
@@ -188,12 +188,12 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.dehumidifier = "❌";
       } else if (cu_temp >= re_temp_hl && cu_temp < re_temp_low) {
         statuses.fan1 = "✅";
-        statuses.fan2 = "❌";
+        statuses.fan2 = "✅";
         statuses.vent1 = "❌";
         statuses.vent2 = "❌";
-        statuses.vent3 = "✅";
+        statuses.vent3 = "❌";
         statuses.vent4 = "❌";
-        statuses.heater = "❌";
+        statuses.heater = "✅";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
       } else if (cu_temp < re_temp_hl) {
@@ -217,7 +217,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "✅";
-      }else if(cu_humidity > re_humidity_hh){
+      } else if (cu_humidity > re_humidity_hh) {
         statuses.fan1 = "✅";
         statuses.fan2 = "✅";
         statuses.vent1 = "✅";
@@ -227,8 +227,10 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
-        
-      }else if (cu_humidity >= re_humidity_hl && cu_humidity <= re_humidity_low) {
+      } else if (
+        cu_humidity >= re_humidity_hl &&
+        cu_humidity <= re_humidity_low
+      ) {
         statuses.fan1 = "✅";
         statuses.fan2 = "❌";
         statuses.vent1 = "❌";
@@ -238,7 +240,7 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "❌";
         statuses.dehumidifier = "❌";
-      }else if(cu_humidity < re_humidity_hl){
+      } else if (cu_humidity < re_humidity_hl) {
         statuses.fan1 = "❌";
         statuses.fan2 = "❌";
         statuses.vent1 = "❌";
@@ -248,7 +250,6 @@ app.controller("myctrl", ($scope, $http, $window) => {
         statuses.heater = "❌";
         statuses.mistyrise = "✅";
         statuses.dehumidifier = "❌";
-        
       }
     }
     return statuses;
