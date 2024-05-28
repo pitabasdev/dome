@@ -113,7 +113,7 @@
       fetch('/getthreshholdvalue/<%= id %>')
           .then(response => response.json())
           .then(data => {
-              const thresholdLabels = ['Temperature Low', 'Temperature High', 'Humidity Low', 'Humidity High', 'Temperature Low High', 'Temperature High High', 'Humidity Low High', 'Humidity High High', 'CO2 Low', 'CO2 High', 'Soil Moisture Low', 'Soil Moisture High'];
+              const thresholdLabels = ['Temperature Low', 'Temperature High', 'Humidity Low', 'Humidity High', 'Temperature Hysteresis Low', 'Temperature Hysteresis High', 'Humidity Hysteresis Low', 'Humidity Hysteresis High', 'CO2 Low', 'CO2 High', 'Soil Moisture Low', 'Soil Moisture High'];
               const thresholdValues = [
                   data.led[0].re_temp_low,
                   data.led[0].re_temp_high,
