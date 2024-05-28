@@ -26,7 +26,6 @@
       }
   
       .card {
-    
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
       }
@@ -34,8 +33,8 @@
       .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
       }
-      body {
 
+      body {
         min-height: 100vh;
         margin: 0;
         display: flex;
@@ -47,11 +46,22 @@
       }
   
       footer {
-        /* Sticky footer styles */
-        position: sticky;
+        /* Fixed footer styles */
+        position: fixed;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.05);
         width: 100%;
+        background-color: rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+      }
+
+      .footer-content {
+        padding: 10px;
+      }
+
+      .footer-bottom {
+        background-color: #116530;
+        color: white;
+        padding: 10px 0;
       }
     </style>
     <title>Signup</title>
@@ -133,13 +143,13 @@
                 <div class="mb-3">
                   <label for="exampleFormControlTextarea1" class="form-label"
                     >Special Access code
-                    <sub class="text-muted">(OPTiONAL)</sub>
+                    <sub class="text-muted">(OPTIONAL)</sub>
                   </label>
                   <input
                     type="text"
                     class="form-control"
                     id="specialaccess"
-                    placeholder="Password"
+                    placeholder="Special Access Code"
                   />
                 </div>
                 <button class="btn btn-outline-dark">SignUp</button>
@@ -157,53 +167,22 @@
         </div>
       </div>
     </div>
-    <footer class="bg-body-tertiary text-center mt-4">
-			
-			<div class="container p-4 pb-0">
-				<section class="mb-4">
-					<a
-						data-mdb-ripple-init
-						class="btn text-white btn-floating m-1"
-						style="background-color: #3b5998"
-						href="/aboutus"
-						role="button"
-						><i class="fa-solid fa-address-card"></i></a>
-					<a
-						data-mdb-ripple-init
-						class="btn text-white btn-floating m-1"
-						style="background-color: #ac2bac"
-						href="#!"
-						role="button"
-						><i class="fab fa-instagram"></i
-					></a>
-					<a
-						data-mdb-ripple-init
-						class="btn text-white btn-floating m-1"
-						style="background-color: #0082ca"
-						href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/"
-						role="button"
-						><i class="fab fa-linkedin-in"></i
-					></a>
-					<a
-						data-mdb-ripple-init
-						class="btn text-white btn-floating m-1"
-						style="background-color: #333333"
-						href="https://github.com/pitabasdev"
-						role="button"
-						><i class="fab fa-github"></i
-					></a>
-				</section>
-			</div>
-            <div
-            class="text-center p-3  text-white"
-            style="background-color: #116530;"
-          >
-           This made with by 💖
-            <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/"
-              >Pitabas</a
-            >
-          </div>
-		</footer>
+
+    <footer class="bg-body-tertiary text-center">
+      <div class="footer-content container p-4 pb-0">
+        <section class="mb-4">
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #3b5998" href="/aboutus" role="button"><i class="fa-solid fa-address-card"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #0082ca" href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/" role="button"><i class="fab fa-linkedin-in"></i></a>
+          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #333333" href="https://github.com/pitabasdev" role="button"><i class="fab fa-github"></i></a>
+        </section>
+      </div>
+      <div class="footer-bottom text-center p-3">
+        This made with by 💖
+        <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/">Pitabas</a>
+      </div>
+    </footer>
+
     <script>
       const form = document.getElementById("reg-form");
       form.addEventListener("submit", registeruser);
@@ -212,7 +191,6 @@
         e.preventDefault();
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
-
         const password = document.getElementById("password").value;
         const specialaccess = document.getElementById("specialaccess").value;
 
@@ -235,6 +213,7 @@
         }
       }
     </script>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
