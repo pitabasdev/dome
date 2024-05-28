@@ -78,7 +78,11 @@
       style="background-color: #116530"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img style="height: 38px;" src="/images/large__1_-removebg-preview.png"></a>
+        <a class="navbar-brand" href="#"
+          ><img
+            style="height: 38px"
+            src="/images/large__1_-removebg-preview.png"
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -111,15 +115,33 @@
               <form id="login-form">
                 <hr />
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter Your Email" />
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter Your Email"
+                  />
                 </div>
                 <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password" />
+                  <label for="exampleFormControlTextarea1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Password"
+                  />
                 </div>
-                <button class="btn btn-outline-dark" type="submit">Login</button>
-                <button class="btn btn-outline-danger" type="reset">Reset</button>
+                <button class="btn btn-outline-dark" type="submit">
+                  Login
+                </button>
+                <button class="btn btn-outline-danger" type="reset">
+                  Reset
+                </button>
                 <br />
               </form>
               <p>
@@ -132,19 +154,48 @@
         </div>
       </div>
     </div>
-    
+
     <footer class="bg-body-tertiary text-center">
       <div class="footer-content container p-4 pb-0">
         <section class="mb-4">
-          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #3b5998" href="/aboutus" role="button"><i class="fa-solid fa-address-card"></i></a>
-          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i class="fab fa-instagram"></i></a>
-          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #0082ca" href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/" role="button"><i class="fab fa-linkedin-in"></i></a>
-          <a data-mdb-ripple-init class="btn text-white btn-floating m-1" style="background-color: #333333" href="https://github.com/pitabasdev" role="button"><i class="fab fa-github"></i></a>
+          <a
+            data-mdb-ripple-init
+            class="btn text-white btn-floating m-1"
+            style="background-color: #3b5998"
+            href="/aboutus"
+            role="button"
+            ><i class="fa-solid fa-address-card"></i
+          ></a>
+          <a
+            data-mdb-ripple-init
+            class="btn text-white btn-floating m-1"
+            style="background-color: #ac2bac"
+            href="#!"
+            role="button"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            data-mdb-ripple-init
+            class="btn text-white btn-floating m-1"
+            style="background-color: #0082ca"
+            href="https://www.linkedin.com/in/pitabas-pradhan-606aa3201/"
+            role="button"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+          <a
+            data-mdb-ripple-init
+            class="btn text-white btn-floating m-1"
+            style="background-color: #333333"
+            href="https://github.com/pitabasdev"
+            role="button"
+            ><i class="fab fa-github"></i
+          ></a>
         </section>
       </div>
       <div class="footer-bottom text-center p-3">
         This made with by 💖
-        <a class="text-body" href="https://portfolio-pitabas1977.vercel.app/">Pitabas</a>
+        <a class="text-body" href="https://pitabas.tech">Pitabas</a> &
+        <a class="text-body" href="https://pitabas.tech">Dr. Ashish</a>
       </div>
     </footer>
 
@@ -173,7 +224,9 @@
           var time = now.getTime();
           var expireTime = time + 1000 * 36000;
           now.setTime(expireTime);
-          document.cookie = `token=${result.data};expires=${now.toUTCString()};`;
+          document.cookie = `token=${
+            result.data
+          };expires=${now.toUTCString()};`;
           console.log(document.cookie);
           window.location = "/home";
         } else {
