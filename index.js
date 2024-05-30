@@ -10,6 +10,7 @@ const Dome = require("./model/dome"); // Ensure this is the correct model name
 const User = require("./model/user");
 const SensorInfo = require("./model/sensorinfo");
 const app = express();
+
 const ADMIN_CODE = process.env.ADMIN_CODE;
 const JWT_SECRET =
   "nuifbewiudfbewiudsfbweufiiuw783278278782378#%$#$#$#$#%$#*y7biuyguyjyvfytjyvf";
@@ -22,8 +23,9 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 const json2csv = require("json2csv").parse;
-const path = require('path');
-const axios = require('axios');
+const path = require("path");
+const axios = require("axios");
+const Light = require("./model/light");
 mongoose
   .connect(process.env.DB_URL)
   .then(async () => {
@@ -54,18 +56,20 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
-app.get('/graphic/:id', async (req, res) => {
+app.get("/graphic/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const sensorData = await SensorInfo.find({ polyhsid: id }).sort({ date: -1 }).limit(10);
+    const sensorData = await SensorInfo.find({ polyhsid: id })
+      .sort({ date: -1 })
+      .limit(10);
     const thresholdData = await threshholdvaluemodel.findOne({ _id: id });
-    console.log(thresholdData)
+    console.log(thresholdData);
     // if (!sensorData || !thresholdData) {
     //   return res.status(404).send({ status: 'fail', message: 'Data not found' });
     // }
-    res.render('graphic', { id, sensorData, thresholdData });
+    res.render("graphic", { id, sensorData, thresholdData });
   } catch (err) {
-    res.status(500).send({ status: 'fail', message: 'Internal Server Error' });
+    res.status(500).send({ status: "fail", message: "Internal Server Error" });
   }
 });
 app.post("/reg", async (req, res) => {
@@ -115,6 +119,7 @@ app.post("/reg", async (req, res) => {
   }
   res.json({ status: "ok" });
 });
+
 app.get("/home/:id", async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -250,8 +255,6 @@ app.get("/getthreshholdvalue/:id", async (req, res) => {
     res.json({ status: "fail", message: "Something went wrong!" });
   }
 });
-
-
 
 app.get(
   "/addthreshholdvalue/val1/:val1/val2/:val2/val3/:val3/",

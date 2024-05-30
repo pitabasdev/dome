@@ -548,7 +548,11 @@
             <div class="col-md-12" style="margin-top: 20px">
               <div class="text-center">
                 <label class="switch">
-                  <input type="checkbox" id="toggle1" />
+                  <input
+                    type="checkbox"
+                    id="toggle1"
+                    onchange="toggleDevice('toggle1')"
+                  />
                   <span class="slider round"></span>
                 </label>
                 <h4 style="margin-top: 10px">Light</h4>
@@ -557,13 +561,17 @@
             <div class="col-md-12" style="margin-top: 20px">
               <div class="text-center">
                 <label class="switch">
-                  <input type="checkbox" id="toggle2" />
+                  <input
+                    type="checkbox"
+                    id="toggle2"
+                    onchange="toggleDevice('toggle2')"
+                  />
                   <span class="slider round"></span>
                 </label>
                 <h4 style="margin-top: 10px">Trellis motor</h4>
               </div>
               <img
-                src="/img/Organic  Farming.svg"
+                src="/img/6346017_25002.jpg"
                 class="img-fluid mx-auto d-block mt-3"
                 alt="Placeholder Image"
               />
