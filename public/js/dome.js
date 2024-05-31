@@ -89,6 +89,8 @@ app.controller("myctrl", ($scope, $http, $window) => {
       heater: "❌",
       mistyrise: "❌",
       dehumidifier: "❌",
+      co2valve: "❌",
+      watervalve: "❌",
     };
 
     const cu_temp = currentstatusofperiph.cu_temp;
@@ -103,11 +105,36 @@ app.controller("myctrl", ($scope, $http, $window) => {
     const re_humidity_hh = currentstatusofperiph.re_humidity_hh;
     const re_humidity_hl = currentstatusofperiph.re_humidity_hl;
 
+    const cu_co2 = currentstatusofperiph.cu_co2;
+    const cu_soilmoisture = currentstatusofperiph.cu_soilmoisture;
     const re_co2_low = currentstatusofperiph.re_co2_low;
     const re_co2_high = currentstatusofperiph.re_co2_high;
     const re_soilmoisture_low = currentstatusofperiph.re_soilmoisture_low;
     const re_soilmoisture_high = currentstatusofperiph.re_soilmoisture_high;
 
+    console.log(cu_co2, cu_soilmoisture);
+
+    if (
+      cu_soilmoisture <= re_soilmoisture_high &&
+      cu_soilmoisture >= re_soilmoisture_low
+    ) {
+      statuses.watervalve = "❌";
+    }
+    if (cu_soilmoisture > re_soilmoisture_high) {
+      statuses.watervalve = "❌";
+    }
+    if (cu_soilmoisture < re_soilmoisture_low) {
+      statuses.watervalve = "✅";
+    }
+    if (cu_co2 <= re_co2_high && cu_co2 >= re_co2_low) {
+      statuses.co2valve = "❌";
+    }
+    if (cu_co2 > re_co2_high) {
+      statuses.co2valve = "❌";
+    }
+    if (cu_co2 < re_co2_low) {
+      statuses.co2valve = "✅";
+    }
     if (6 <= currentHour && currentHour <= 17) {
       if (cu_temp >= re_temp_low && cu_temp <= re_temp_high) {
         statuses.fan1 = "✅";
