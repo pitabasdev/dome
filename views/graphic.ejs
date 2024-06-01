@@ -8,7 +8,6 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@^3"></script>
   </head>
@@ -53,18 +52,17 @@
       </div>
     </div>
     <footer class="bg-body-tertiary text-center mt-4">
-			
         <div
-          class="text-center p-3  text-white"
+          class="text-center p-3 text-white"
           style="background-color: #116530;"
         >
-         This made with by 💖
+         This is made with 💖 by 
          <a class="text-body" href="https://pitabas.tech">Pitabas</a> & <a class="text-body" href="https://www.facebook.com/ashishdashnitrkl">Dr. Ashish</a>
         </div>
-          </footer>
+    </footer>
     <script>
       const ctx = document.getElementById('sensorChart').getContext('2d');
-      const sensorData = <%- JSON.stringify(sensorData) %>;
+      let sensorData = <%- JSON.stringify(sensorData) %>;
 
       const labels = sensorData.map(data => new Date(data.date));
       const tempData = sensorData.map(data => data.temp);
@@ -73,148 +71,179 @@
       const co2Data = sensorData.map(data => data.co2);
 
       const chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: labels,
-              datasets: [
-                  {
-                      label: 'Temperature',
-                      data: tempData,
-                      borderColor: 'rgb(255, 99, 132)',
-                      tension: 0.1,
-                      fill: false
-                  },
-                  {
-                      label: 'Humidity',
-                      data: humidityData,
-                      borderColor: 'rgb(54, 162, 235)',
-                      tension: 0.1,
-                      fill: false
-                  },
-                  {
-                      label: 'Moisture',
-                      data: moistureData,
-                      borderColor: 'rgb(75, 192, 192)',
-                      tension: 0.1,
-                      fill: false
-                  },
-                  {
-                      label: 'CO2',
-                      data: co2Data,
-                      borderColor: 'rgb(153, 102, 255)',
-                      tension: 0.1,
-                      fill: false
-                  }
-              ]
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Temperature',
+              data: tempData,
+              borderColor: 'rgb(255, 99, 132)',
+              tension: 0.1,
+              fill: false,
+            },
+            {
+              label: 'Humidity',
+              data: humidityData,
+              borderColor: 'rgb(54, 162, 235)',
+              tension: 0.1,
+              fill: false,
+            },
+            {
+              label: 'Moisture',
+              data: moistureData,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1,
+              fill: false,
+            },
+            {
+              label: 'CO2',
+              data: co2Data,
+              borderColor: 'rgb(153, 102, 255)',
+              tension: 0.1,
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 10,
+              },
+            },
+            x: {
+              type: 'time',
+              time: {
+                unit: 'second',
+                displayFormats: {
+                  second: 'h:mm:ss a',
+                },
+                stepSize: 20,
+              },
+              title: {
+                display: true,
+                text: 'Timestamp',
+              },
+            },
           },
-          options: {
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Sensor Data Over Time',
+            },
+          },
+        },
+      });
+
+      function fetchSensorData() {
+        fetch('/getsensordata')
+          .then((response) => response.json())
+          .then((data) => {
+            sensorData = data;
+            chart.data.labels = sensorData.map((data) => new Date(data.date));
+            chart.data.datasets[0].data = sensorData.map((data) => data.temp);
+            chart.data.datasets[1].data = sensorData.map((data) => data.humidity);
+            chart.data.datasets[2].data = sensorData.map((data) => data.moisture);
+            chart.data.datasets[3].data = sensorData.map((data) => data.co2);
+            chart.update();
+          });
+      }
+
+      setInterval(fetchSensorData, 20000);
+
+      fetch('/getthreshholdvalue/<%= id %>')
+        .then((response) => response.json())
+        .then((data) => {
+          const thresholdLabels = [
+            'Temperature Low',
+            'Temperature High',
+            'Humidity Low',
+            'Humidity High',
+            'Temperature Hysteresis Low',
+            'Temperature Hysteresis High',
+            'Humidity Hysteresis Low',
+            'Humidity Hysteresis High',
+            'CO2 Low',
+            'CO2 High',
+            'Soil Moisture Low',
+            'Soil Moisture High',
+          ];
+          const thresholdValues = [
+            data.led[0].re_temp_low,
+            data.led[0].re_temp_high,
+            data.led[0].re_humidity_low,
+            data.led[0].re_humidity_high,
+            data.led[0].re_temp_hl,
+            data.led[0].re_temp_hh,
+            data.led[0].re_humidity_hl,
+            data.led[0].re_humidity_hh,
+            data.led[0].re_co2_low,
+            data.led[0].re_co2_high,
+            data.led[0].re_soilmoisture_low,
+            data.led[0].re_soilmoisture_high,
+          ];
+
+          const thresholdCtx = document
+            .getElementById('thresholdChart')
+            .getContext('2d');
+          const thresholdChart = new Chart(thresholdCtx, {
+            type: 'bar',
+            data: {
+              labels: thresholdLabels,
+              datasets: [
+                {
+                  label: 'Threshold Values',
+                  data: thresholdValues,
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                  ],
+                  borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
               responsive: true,
               maintainAspectRatio: false,
               scales: {
-                  y: {
-                      beginAtZero: true,
-                      ticks: {
-                          stepSize: 10
-                      }
-                  },
-                  x: {
-                      type: 'time',
-                      time: {
-                          unit: 'minute',
-                          displayFormats: {
-                              minute: 'h:mm a'
-                          },
-                          stepSize: 1
-                      },
-                      title: {
-                          display: true,
-                          text: 'Timestamp'
-                      }
-                  }
+                y: {
+                  beginAtZero: true,
+                },
               },
-              plugins: {
-                  legend: {
-                      position: 'top',
-                  },
-                  title: {
-                      display: true,
-                      text: 'Sensor Data Over Time'
-                  }
-              }
-          }
-      });
-
-      fetch('/getthreshholdvalue/<%= id %>')
-          .then(response => response.json())
-          .then(data => {
-              const thresholdLabels = ['Temperature Low', 'Temperature High', 'Humidity Low', 'Humidity High', 'Temperature Hysteresis Low', 'Temperature Hysteresis High', 'Humidity Hysteresis Low', 'Humidity Hysteresis High', 'CO2 Low', 'CO2 High', 'Soil Moisture Low', 'Soil Moisture High'];
-              const thresholdValues = [
-                  data.led[0].re_temp_low,
-                  data.led[0].re_temp_high,
-                  data.led[0].re_humidity_low,
-                  data.led[0].re_humidity_high,
-                  data.led[0].re_temp_hl,
-                  data.led[0].re_temp_hh,
-                  data.led[0].re_humidity_hl,
-                  data.led[0].re_humidity_hh,
-                  data.led[0].re_co2_low,
-                  data.led[0].re_co2_high,
-                  data.led[0].re_soilmoisture_low,
-                  data.led[0].re_soilmoisture_high
-              ];
-
-              const thresholdCtx = document.getElementById('thresholdChart').getContext('2d');
-              const thresholdChart = new Chart(thresholdCtx, {
-                  type: 'bar',
-                  data: {
-                      labels: thresholdLabels,
-                      datasets: [{
-                          label: 'Threshold Values',
-                          data: thresholdValues,
-                          backgroundColor: [
-                              'rgba(255, 99, 132, 0.2)',
-                              'rgba(54, 162, 235, 0.2)',
-                              'rgba(255, 206, 86, 0.2)',
-                              'rgba(75, 192, 192, 0.2)',
-                              'rgba(153, 102, 255, 0.2)',
-                              'rgba(255, 159, 64, 0.2)',
-                              'rgba(255, 99, 132, 0.2)',
-                              'rgba(54, 162, 235, 0.2)',
-                              'rgba(255, 206, 86, 0.2)',
-                              'rgba(75, 192, 192, 0.2)',
-                              'rgba(153, 102, 255, 0.2)',
-                              'rgba(255, 159, 64, 0.2)'
-
-                          ],
-                          borderColor: [
-                              'rgba(255, 99, 132, 1)',
-                              'rgba(54, 162, 235, 1)',
-                              'rgba(255, 206, 86, 1)',
-                              'rgba(75, 192, 192, 1)',
-                              'rgba(153, 102, 255, 1)',
-                              'rgba(255, 159, 64, 1)',
-                              'rgba(255, 99, 132, 1)',
-                              'rgba(54, 162, 235, 1)',
-                              'rgba(255, 206, 86, 1)',
-                              'rgba(75, 192, 192, 1)',
-                              'rgba(153, 102, 255, 1)',
-                              'rgba(255, 159, 64, 1)'
-
-                          ],
-                          borderWidth: 1
-                      }]
-                  },
-                  options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                          y: {
-                              beginAtZero: true
-                          }
-                      }
-                  }
-              });
+            },
           });
+        });
     </script>
   </body>
 </html>
